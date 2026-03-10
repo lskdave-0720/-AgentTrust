@@ -1,21 +1,258 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AgentTrust - Find Verified Real Estate Agents in Nigeria</title>
-    <meta name="description" content="Nigeria's premier platform for connecting with verified real estate agents. Every agent is verified with NIN and IMBLN license." />
-    <meta property="og:title" content="AgentTrust - Find Verified Real Estate Agents in Nigeria" />
-    <meta property="og:description" content="Every agent is verified with NIN and IMBLN license. No more fraud." />
-    <meta property="og:image" content="https://bolt.new/static/og_default.png" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="AgentTrust - Find Verified Real Estate Agents in Nigeria" />
-    <meta name="twitter:description" content="Every agent is verified with NIN and IMBLN license. No more fraud." />
-    <meta name="twitter:image" content="https://bolt.new/static/og_default.png" />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+    <meta name="description" content="Nigeria's premier platform for connecting with verified real estate agents. Every agent is verified with NIN and IMBLN license.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .primary-color {
+            color: #0B4F37;
+        }
+        .primary-bg {
+            background-color: #0B4F37;
+        }
+        .accent-color {
+            color: #F5B041;
+        }
+        .accent-bg {
+            background-color: #F5B041;
+        }
+        .btn-primary {
+            background-color: #0B4F37;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            box-shadow: 0 10px 25px rgba(11, 79, 55, 0.3);
+            transform: translateY(-2px);
+        }
+        .btn-outline {
+            color: #0B4F37;
+            border: 2px solid #0B4F37;
+            transition: all 0.3s ease;
+        }
+        .btn-outline:hover {
+            background-color: #0B4F37;
+            color: white;
+            box-shadow: 0 10px 25px rgba(11, 79, 55, 0.2);
+            transform: translateY(-2px);
+        }
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+        .feature-card:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        .trust-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: #f3f4f6;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            color: #1f2937;
+        }
+        .check-icon {
+            width: 20px;
+            height: 20px;
+            color: #0B4F37;
+        }
+        .hero-title {
+            font-size: clamp(2rem, 5vw, 3.75rem);
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        .section-spacing {
+            padding: 3rem 1rem;
+        }
+        @media (min-width: 640px) {
+            .section-spacing {
+                padding: 5rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Header -->
+    <header class="border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <svg class="w-8 h-8 primary-color" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+                    </svg>
+                    <span class="text-2xl font-bold primary-color">AgentTrust</span>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#features" class="text-gray-600 hover:text-gray-900 transition-colors">Features</a>
+                    <a href="#cta" class="text-gray-600 hover:text-gray-900 transition-colors">Get Started</a>
+                    <a href="#footer" class="text-gray-600 hover:text-gray-900 transition-colors">Contact</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="relative section-spacing">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center max-w-4xl mx-auto">
+                    <h1 class="hero-title primary-color mb-6">
+                        Find Verified Real Estate Agents in Nigeria
+                    </h1>
+                    <p class="text-lg sm:text-xl text-gray-600 mb-8 leading-relaxed max-w-2xl mx-auto">
+                        Every agent is verified with NIN and IMBLN license. No more fraud.
+                    </p>
+
+                    <!-- CTA Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+                        <button class="px-8 py-4 text-lg font-semibold rounded-lg btn-primary">
+                            Join as Agent
+                        </button>
+                        <button class="px-8 py-4 text-lg font-semibold rounded-lg btn-outline">
+                            Find an Agent
+                        </button>
+                    </div>
+
+                    <!-- Trust Badges -->
+                    <div class="flex flex-wrap justify-center items-center gap-4 sm:gap-6 pt-8 border-t border-gray-200">
+                        <div class="trust-badge">
+                            <svg class="check-icon" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            <span>IMBLN</span>
+                        </div>
+                        <div class="trust-badge">
+                            <svg class="check-icon" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            <span>NIN Verified</span>
+                        </div>
+                        <div class="trust-badge">
+                            <svg class="check-icon" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            <span>NDPR Compliant</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="section-spacing bg-gray-50">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Feature 1: NIN Verification -->
+                    <div class="feature-card bg-white rounded-2xl p-8 shadow-md">
+                        <div class="w-14 h-14 rounded-xl primary-bg flex items-center justify-center mb-6">
+                            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m7 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4 primary-color">NIN Verification</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            Every agent is verified with their National Identification Number. Government ID check ensures authenticity and trust.
+                        </p>
+                    </div>
+
+                    <!-- Feature 2: IMBLN License -->
+                    <div class="feature-card bg-white rounded-2xl p-8 shadow-md">
+                        <div class="w-14 h-14 rounded-xl accent-bg flex items-center justify-center mb-6">
+                            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7 12a5 5 0 1110 0 5 5 0 01-10 0z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4 primary-color">IMBLN License</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            Professional registration verified through the Institute of Mass Communication Business License of Nigeria.
+                        </p>
+                    </div>
+
+                    <!-- Feature 3: Direct WhatsApp -->
+                    <div class="feature-card bg-white rounded-2xl p-8 shadow-md">
+                        <div class="w-14 h-14 rounded-xl primary-bg flex items-center justify-center mb-6">
+                            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4 primary-color">Direct WhatsApp</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            Contact verified agents instantly through WhatsApp. Quick, secure, and convenient communication.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section id="cta" class="section-spacing">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-3xl sm:text-4xl font-bold mb-6 primary-color">
+                    Ready to Connect with Trusted Agents?
+                </h2>
+                <p class="text-lg text-gray-600 mb-8">
+                    Join thousands of Nigerians who trust AgentTrust for their real estate needs.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button class="px-8 py-4 text-lg font-semibold rounded-lg btn-primary">
+                        Get Started Today
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer id="footer" class="border-t border-gray-200 py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <!-- Brand -->
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <svg class="w-8 h-8 primary-color" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+                        </svg>
+                        <span class="text-2xl font-bold primary-color">AgentTrust</span>
+                    </div>
+                    <p class="text-gray-600 max-w-md">
+                        Nigeria's premier platform for connecting with verified real estate agents. Safe, secure, and trustworthy.
+                    </p>
+                </div>
+
+                <!-- Legal Links -->
+                <div>
+                    <h4 class="font-semibold mb-4 primary-color">Legal</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-600 hover:text-gray-900 transition-colors">Terms of Service</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-gray-900 transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-gray-900 transition-colors">Cookie Policy</a></li>
+                    </ul>
+                </div>
+
+                <!-- Support Links -->
+                <div>
+                    <h4 class="font-semibold mb-4 primary-color">Support</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-600 hover:text-gray-900 transition-colors">Contact Us</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-gray-900 transition-colors">Help Center</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-gray-900 transition-colors">FAQs</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Copyright -->
+            <div class="pt-8 border-t border-gray-200 text-center text-gray-600">
+                <p>&copy; 2024 AgentTrust. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
 </html>
