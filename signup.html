@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join as Agent - AgentTrust</title>
+    <meta name="description" content="Create your agent account on AgentTrust and get verified with us.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .primary-color {
+            color: #0B4F37;
+        }
+        .primary-bg {
+            background-color: #0B4F37;
+        }
+        .accent-bg {
+            background-color: #F5B041;
+        }
+        .btn-primary {
+            background-color: #0B4F37;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            box-shadow: 0 10px 25px rgba(11, 79, 55, 0.3);
+            transform: translateY(-2px);
+        }
+        .form-input {
+            border-color: #e5e7eb;
+            transition: all 0.3s ease;
+        }
+        .form-input:focus {
+            border-color: #0B4F37;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(11, 79, 55, 0.1);
+        }
+        .form-input::placeholder {
+            color: #9ca3af;
+        }
+        .error-message {
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+        .error-message.show {
+            display: block;
+        }
+        .success-message {
+            background-color: #0B4F37;
+            color: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+            display: none;
+        }
+        .success-message.show {
+            display: block;
+        }
+        .upload-area {
+            border: 2px dashed #0B4F37;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .upload-area:hover {
+            background-color: #f9fafb;
+        }
+        .file-input {
+            display: none;
+        }
+        .password-toggle {
+            cursor: pointer;
+            color: #4b5563;
+        }
+        .checkbox-input {
+            accent-color: #0B4F37;
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Header -->
+    <header class="border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <svg class="w-8 h-8 primary-color" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+                    </svg>
+                    <span class="text-2xl font-bold primary-color">AgentTrust</span>
+                </div>
+                <a href="landing.html" class="flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                    <span class="hidden sm:inline">Back Home</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-2xl mx-auto">
+            <div class="mb-8">
+                <h1 class="text-4xl font-bold mb-2 primary-color">Join as Agent</h1>
+                <p class="text-lg text-gray-600">Create your account and get verified with us</p>
+            </div>
+
+            <div id="successMessage" class="success-message">
+                <p class="font-semibold">Account creation successful! Redirecting...</p>
+            </div>
+
+            <form id="signupForm" class="bg-gray-50 rounded-2xl p-6 sm:p-8">
+                <!-- Full Name and Phone Number -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="fullName" class="block text-sm font-semibold text-gray-700 mb-2">
+                            Full Name *
+                        </label>
+                        <input
+                            type="text"
+                            id="fullName"
+                            name="fullName"
+                            class="form-input w-full px-4 py-2 border rounded-lg"
+                            placeholder="Enter your full name"
+                        />
+                        <div class="error-message" id="fullNameError"></div>
+                    </div>
+
+                    <div>
+                        <label for="phoneNumber" class="block text-sm font-semibold text-gray-700 mb-2">
+                            Phone Number *
+                        </label>
+                        <input
+                            type="tel"
+                            id="phoneNumber"
+                            name="phoneNumber"
+                            class="form-input w-full px-4 py-2 border rounded-lg"
+                            placeholder="e.g., 08012345678"
+                        />
+                        <div class="error-message" id="phoneNumberError"></div>
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div class="mb-6">
+                    <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">
+                        Email Address *
+                    </label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        class="form-input w-full px-4 py-2 border rounded-lg"
+                        placeholder="your.email@example.com"
+                    />
+                    <div class="error-message" id="emailError"></div>
+                </div>
+
+                <!-- Location -->
+                <div class="mb-6">
+                    <label for="location" class="block text-sm font-semibold text-gray-700 mb-2">
+                        Location *
+                    </label>
+                    <select
+                        id="location"
+                        name="location"
+                        class="form-input w-full px-4 py-2 border rounded-lg"
+                    >
+                        <option value="">Select your location</option>
+                        <option value="Lagos">Lagos</option>
+                        <option value="Port Harcourt">Port Harcourt</option>
+                        <option value="Abuja">Abuja</option>
+                        <option value="Ibadan">Ibadan</option>
+                        <option value="Kano">Kano</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <div class="error-message" id="locationError"></div>
+                </div>
+
+                <!-- NIN and IMBLN License -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="nin" class="block text-sm font-semibold text-gray-700 mb-2">
+                            NIN (11 digits) *
+                        </label>
+                        <input
+                            type="text"
+                            id="nin"
+                            name="nin"
+                            class="form-input w-full px-4 py-2 border rounded-lg"
+                            placeholder="e.g., 12345678901"
+                            maxlength="11"
+                        />
+                        <div class="error-message" id="ninError"></div>
+                    </div>
+
+                    <div>
+                        <label for="imblnLicense" class="block text-sm font-semibold text-gray-700 mb-2">
+                            IMBLN License Number *
+                        </label>
+                        <input
+                            type="text"
+                            id="imblnLicense"
+                            name="imblnLicense"
+                            class="form-input w-full px-4 py-2 border rounded-lg"
+                            placeholder="Enter your license number"
+                        />
+                        <div class="error-message" id="imblnLicenseError"></div>
+                    </div>
+                </div>
+
+                <!-- File Upload -->
+                <div class="mb-6">
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        Upload License Document
+                    </label>
+                    <div class="upload-area" id="uploadArea">
+                        <svg class="w-8 h-8 mb-2 mx-auto primary-color" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                        </svg>
+                        <p class="text-sm text-gray-600">Click to upload</p>
+                        <input type="file" id="licenseFile" class="file-input" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" />
+                    </div>
+                </div>
+
+                <!-- Password and Confirm Password -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="password" class="block text-sm font-semibold text-gray-700 mb-2">
+                            Password *
+                        </label>
+                        <div class="relative">
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                class="form-input w-full px-4 py-2 border rounded-lg pr-10"
+                                placeholder="At least 8 characters"
+                            />
+                            <button
+                                type="button"
+                                class="password-toggle absolute right-3 top-2.5"
+                                onclick="togglePassword('password')"
+                            >
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="error-message" id="passwordError"></div>
+                    </div>
+
+                    <div>
+                        <label for="confirmPassword" class="block text-sm font-semibold text-gray-700 mb-2">
+                            Confirm Password *
+                        </label>
+                        <div class="relative">
+                            <input
+                                type="password"
+                                id="confirmPassword"
+                                name="confirmPassword"
+                                class="form-input w-full px-4 py-2 border rounded-lg pr-10"
+                                placeholder="Confirm your password"
+                            />
+                            <button
+                                type="button"
+                                class="password-toggle absolute right-3 top-2.5"
+                                onclick="togglePassword('confirmPassword')"
+                            >
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="error-message" id="confirmPasswordError"></div>
+                    </div>
+                </div>
+
+                <!-- Terms Agreement -->
+                <div class="mb-8">
+                    <label class="flex items-start space-x-3 cursor-pointer">
+                        <input
+                            type="checkbox"
+                            id="agreeToTerms"
+                            name="agreeToTerms"
+                            class="checkbox-input mt-1"
+                        />
+                        <span class="text-sm text-gray-600">
+                            I agree to the <a href="#" class="font-semibold primary-color hover:underline">Terms of Service</a> and <a href="#" class="font-semibold primary-color hover:underline">Privacy Policy</a>
+                        </span>
+                    </label>
+                    <div class="error-message" id="agreeToTermsError"></div>
+                </div>
+
+                <!-- Submit Button -->
+                <button
+                    type="submit"
+                    class="btn-primary w-full py-3 text-lg font-semibold rounded-lg"
+                >
+                    Create Account
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-200 py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <svg class="w-8 h-8 primary-color" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+                        </svg>
+                        <span class="text-2xl font-bold primary-color">AgentTrust</span>
+                    </div>
+                    <p class="text-gray-600 max-w-md">
+                        Nigeria's premier platform for connecting with verified real estate agents. Safe, secure, and trustworthy.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold mb-4 primary-color">Legal</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-600 hover:text-gray-900 transition-colors">Terms of Service</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-gray-900 transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-gray-900 transition-colors">Cookie Policy</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold mb-4 primary-color">Support</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-600 hover:text-gray-900 transition-colors">Contact Us</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-gray-900 transition-colors">Help Center</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-gray-900 transition-colors">FAQs</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pt-8 border-t border-gray-200 text-center text-gray-600">
+                <p>&copy; 2024 AgentTrust. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const form = document.getElementById('signupForm');
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('licenseFile');
+        const successMessage = document.getElementById('successMessage');
+
+        // Handle file upload area click
+        uploadArea.addEventListener('click', () => fileInput.click());
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.style.backgroundColor = '#f3f4f6';
+        });
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.style.backgroundColor = 'transparent';
+        });
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.style.backgroundColor = 'transparent';
+            fileInput.files = e.dataTransfer.files;
+        });
+
+        // Password visibility toggle
+        function togglePassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            const type = field.type === 'password' ? 'text' : 'password';
+            field.type = type;
+        }
+
+        // Clear error messages on input
+        document.querySelectorAll('.form-input').forEach(input => {
+            input.addEventListener('input', () => {
+                const errorId = input.id + 'Error';
+                const errorElement = document.getElementById(errorId);
+                if (errorElement) {
+                    errorElement.classList.remove('show');
+                }
+            });
+        });
+
+        // Form validation
+        function validateForm() {
+            const errors = {};
+
+            const fullName = document.getElementById('fullName').value.trim();
+            if (!fullName) {
+                errors.fullName = 'Full name is required';
+            }
+
+            const phoneNumber = document.getElementById('phoneNumber').value.replace(/\s/g, '');
+            if (!phoneNumber) {
+                errors.phoneNumber = 'Phone number is required';
+            } else if (!/^0[0-9]{10}$/.test(phoneNumber)) {
+                errors.phoneNumber = 'Phone number must start with 0 and have 11 digits';
+            }
+
+            const email = document.getElementById('email').value.trim();
+            if (!email) {
+                errors.email = 'Email is required';
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                errors.email = 'Please enter a valid email';
+            }
+
+            const location = document.getElementById('location').value;
+            if (!location) {
+                errors.location = 'Location is required';
+            }
+
+            const nin = document.getElementById('nin').value;
+            if (!nin) {
+                errors.nin = 'NIN is required';
+            } else if (!/^[0-9]{11}$/.test(nin)) {
+                errors.nin = 'NIN must be exactly 11 digits';
+            }
+
+            const imblnLicense = document.getElementById('imblnLicense').value.trim();
+            if (!imblnLicense) {
+                errors.imblnLicense = 'IMBLN License number is required';
+            }
+
+            const password = document.getElementById('password').value;
+            if (!password) {
+                errors.password = 'Password is required';
+            } else if (password.length < 8) {
+                errors.password = 'Password must be at least 8 characters';
+            }
+
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            if (!confirmPassword) {
+                errors.confirmPassword = 'Please confirm your password';
+            } else if (password !== confirmPassword) {
+                errors.confirmPassword = 'Passwords do not match';
+            }
+
+            const agreeToTerms = document.getElementById('agreeToTerms').checked;
+            if (!agreeToTerms) {
+                errors.agreeToTerms = 'You must agree to the Terms and Privacy Policy';
+            }
+
+            return errors;
+        }
+
+        // Display errors
+        function displayErrors(errors) {
+            document.querySelectorAll('.error-message').forEach(el => {
+                el.classList.remove('show');
+            });
+
+            for (const [fieldName, errorMessage] of Object.entries(errors)) {
+                const errorElement = document.getElementById(fieldName + 'Error');
+                if (errorElement) {
+                    errorElement.textContent = errorMessage;
+                    errorElement.classList.add('show');
+                }
+            }
+        }
+
+        // Form submission
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const errors = validateForm();
+
+            if (Object.keys(errors).length === 0) {
+                // Show success message
+                successMessage.classList.add('show');
+
+                // Reset form
+                setTimeout(() => {
+                    form.reset();
+                    successMessage.classList.remove('show');
+                }, 3000);
+
+                console.log('Form submitted successfully');
+            } else {
+                displayErrors(errors);
+            }
+        });
+    </script>
+</body>
+</html>
