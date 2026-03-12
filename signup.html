@@ -451,60 +451,72 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script>
-        const supabaseUrl = 'https://welrbhtfsgxeeedycmym.supabase.co';
-        const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndlbHJiaHRmc2d4ZWVkeWNteW0iLCJyb2xlIjoiYW5vbiIsImlhdCI6MTc3MzI3NjQzOSwiZXhwIjoyMDg4ODUyNDM5fQ.bnOBFPPl51RVffRBPeDPNoEZAvVA4WfXZ8ugyRdhGkE';
-        const supabase = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
+        let supabase;
+        let form, uploadArea, fileInput, successMessage, errorMessage, errorText, submitBtn;
 
-        const form = document.getElementById('signupForm');
-        const uploadArea = document.getElementById('uploadArea');
-        const fileInput = document.getElementById('licenseFile');
-        const successMessage = document.getElementById('successMessage');
-        const errorMessage = document.getElementById('errorMessage');
-        const errorText = document.getElementById('errorText');
-        const submitBtn = document.getElementById('submitBtn');
+        document.addEventListener('DOMContentLoaded', function() {
+            const supabaseUrl = 'https://welrbhtfsgxeeedycmym.supabase.co';
+            const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndlbHJiaHRmc2d4ZWVkeWNteW0iLCJyb2xlIjoiYW5vbiIsImlhdCI6MTc3MzI3NjQzOSwiZXhwIjoyMDg4ODUyNDM5fQ.bnOBFPPl51RVffRBPeDPNoEZAvVA4WfXZ8ugyRdhGkE';
+            supabase = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
 
-        uploadArea.addEventListener('click', () => fileInput.click());
+            form = document.getElementById('signupForm');
+            uploadArea = document.getElementById('uploadArea');
+            fileInput = document.getElementById('licenseFile');
+            successMessage = document.getElementById('successMessage');
+            errorMessage = document.getElementById('errorMessage');
+            errorText = document.getElementById('errorText');
+            submitBtn = document.getElementById('submitBtn');
 
-        uploadArea.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            uploadArea.style.backgroundColor = '#f3f4f6';
+            initializeEventListeners();
         });
 
-        uploadArea.addEventListener('dragleave', () => {
-            uploadArea.style.backgroundColor = 'transparent';
-        });
+        function initializeEventListeners() {
 
-        uploadArea.addEventListener('drop', (e) => {
-            e.preventDefault();
-            uploadArea.style.backgroundColor = 'transparent';
-            if (e.dataTransfer.files.length > 0) {
-                fileInput.files = e.dataTransfer.files;
-                document.getElementById('fileName').textContent = e.dataTransfer.files[0].name;
-            }
-        });
+            uploadArea.addEventListener('click', () => fileInput.click());
 
-        fileInput.addEventListener('change', (e) => {
-            if (e.target.files.length > 0) {
-                document.getElementById('fileName').textContent = e.target.files[0].name;
-            }
-        });
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.style.backgroundColor = '#f3f4f6';
+            });
+
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.style.backgroundColor = 'transparent';
+            });
+
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.style.backgroundColor = 'transparent';
+                if (e.dataTransfer.files.length > 0) {
+                    fileInput.files = e.dataTransfer.files;
+                    document.getElementById('fileName').textContent = e.dataTransfer.files[0].name;
+                }
+            });
+
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    document.getElementById('fileName').textContent = e.target.files[0].name;
+                }
+            });
+
+            document.querySelectorAll('.form-input, .checkbox-input').forEach(input => {
+                input.addEventListener('input', () => {
+                    const errorId = input.id + 'Error';
+                    const errorElement = document.getElementById(errorId);
+                    if (errorElement) {
+                        errorElement.classList.remove('show');
+                    }
+                    errorMessage.classList.remove('show');
+                });
+            });
+
+            form.addEventListener('submit', handleFormSubmit);
+        }
 
         window.togglePassword = function(fieldId) {
             const field = document.getElementById(fieldId);
             const type = field.type === 'password' ? 'text' : 'password';
             field.type = type;
         }
-
-        document.querySelectorAll('.form-input, .checkbox-input').forEach(input => {
-            input.addEventListener('input', () => {
-                const errorId = input.id + 'Error';
-                const errorElement = document.getElementById(errorId);
-                if (errorElement) {
-                    errorElement.classList.remove('show');
-                }
-                errorMessage.classList.remove('show');
-            });
-        });
 
         function validateForm() {
             const errors = {};
@@ -581,7 +593,7 @@
             }
         }
 
-        form.addEventListener('submit', async (e) => {
+        async function handleFormSubmit(e) {
             e.preventDefault();
 
             const errors = validateForm();
@@ -645,7 +657,7 @@
                 displayErrors(errors);
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
-        });
+        }
     </script>
 </body>
 </html>
