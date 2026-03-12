@@ -1,627 +1,223 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join as Agent - AgentTrust</title>
-    <meta name="description" content="Create your agent account on AgentTrust and get verified with us.">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-        
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        
-        .primary-color {
-            color: #0B4F37;
-        }
-        
-        .primary-bg {
-            background-color: #0B4F37;
-        }
-        
-        .accent-bg {
-            background-color: #F5B041;
-        }
-        
-        .btn-primary {
-            background-color: #0B4F37;
-            color: white;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-primary:hover {
-            box-shadow: 0 10px 25px rgba(11, 79, 55, 0.3);
-            transform: translateY(-2px);
-        }
-        
-        .form-input {
-            border-color: #e5e7eb;
-            transition: all 0.3s ease;
-        }
-        
-        .form-input:focus {
-            border-color: #0B4F37;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(11, 79, 55, 0.1);
-        }
-        
-        .form-input::placeholder {
-            color: #9ca3af;
-        }
-        
-        .error-message {
-            color: #ef4444;
-            font-size: 0.875rem;
-            margin-top: 0.25rem;
-            display: none;
-        }
-        
-        .error-message.show {
-            display: block;
-        }
-        
-        .success-message {
-            background-color: #0B4F37;
-            color: white;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            margin-bottom: 1.5rem;
-            display: none;
-        }
-        
-        .success-message.show {
-            display: block;
-        }
-        
-        .upload-area {
-            border: 2px dashed #0B4F37;
-            border-radius: 0.5rem;
-            padding: 1.5rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .upload-area:hover {
-            background-color: #f9fafb;
-        }
-        
-        .file-input {
-            display: none;
-        }
-        
-        .password-toggle {
-            cursor: pointer;
-            color: #4b5563;
-        }
-        
-        .checkbox-input {
-            accent-color: #0B4F37;
-        }
-        
-        /* Form section numbering */
-        .form-section {
-            position: relative;
-            padding-left: 2.5rem;
-        }
-        
-        .section-number {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 1.75rem;
-            height: 1.75rem;
-            background-color: #0B4F37;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            font-size: 0.875rem;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Join as Agent - AgentTrust</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+body{font-family:'Inter',sans-serif}
+.primary-color{color:#0B4F37}
+.primary-bg{background-color:#0B4F37}
+.accent-bg{background-color:#F5B041}
+.btn-primary{background:#0B4F37;color:#fff;transition:.3s}
+.btn-primary:hover{box-shadow:0 10px 25px rgba(11,79,55,.3);transform:translateY(-2px)}
+.form-input{border-color:#e5e7eb;transition:.3s}
+.form-input:focus{border-color:#0B4F37;outline:none;box-shadow:0 0 0 3px rgba(11,79,55,.1)}
+.form-input::placeholder{color:#9ca3af}
+.error-message{color:#ef4444;font-size:.875rem;margin-top:.25rem;display:none}
+.error-message.show{display:block}
+.success-message{background:#0B4F37;color:#fff;padding:1rem;border-radius:.5rem;margin-bottom:1.5rem;display:none}
+.success-message.show{display:block}
+.upload-area{border:2px dashed #0B4F37;border-radius:.5rem;padding:1.5rem;text-align:center;cursor:pointer}
+.file-input{display:none}
+.password-toggle{cursor:pointer}
+.checkbox-input{accent-color:#0B4F37}
+.form-section{position:relative;padding-left:2.5rem}
+.section-number{position:absolute;left:0;top:0;width:1.75rem;height:1.75rem;background:#0B4F37;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:.875rem}
+</style>
 </head>
+
 <body class="bg-white">
-    <!-- Header -->
-    <header class="border-b border-gray-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-2">
-                    <svg class="w-8 h-8 primary-color" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
-                    </svg>
-                    <span class="text-2xl font-bold primary-color">AgentTrust</span>
-                </div>
-                <a href="landing.html" class="flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                    </svg>
-                    <span class="hidden sm:inline">Back Home</span>
-                </a>
-            </div>
-        </div>
-    </header>
 
-    <!-- Main Content -->
-    <main class="flex-1 py-12 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-2xl mx-auto">
-            <div class="mb-8">
-                <h1 class="text-4xl font-bold mb-2 primary-color">Join as Agent</h1>
-                <p class="text-lg text-gray-600">Complete all 8 sections below to create your account</p>
-            </div>
+<main class="flex-1 py-12 px-4">
+<div class="max-w-2xl mx-auto">
 
-            <div id="successMessage" class="success-message">
-                <p class="font-semibold">✓ Account created successfully! We'll review your application.</p>
-            </div>
+<h1 class="text-4xl font-bold mb-6 primary-color">Join as Agent</h1>
 
-            <form id="signupForm" class="bg-gray-50 rounded-2xl p-6 sm:p-8">
-                <!-- SECTION 1: PERSONAL INFORMATION -->
-                <div class="form-section mb-8">
-                    <span class="section-number">1</span>
-                    <h2 class="text-xl font-bold primary-color mb-4">Personal Information</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="fullName" class="block text-sm font-semibold text-gray-700 mb-2">
-                                Full Name *
-                            </label>
-                            <input
-                                type="text"
-                                id="fullName"
-                                name="fullName"
-                                class="form-input w-full px-4 py-2 border rounded-lg"
-                                placeholder="Enter your full name"
-                                required
-                            />
-                            <div class="error-message" id="fullNameError"></div>
-                        </div>
+<div id="successMessage" class="success-message">
+Account created successfully! We'll review your application.
+</div>
 
-                        <div>
-                            <label for="phoneNumber" class="block text-sm font-semibold text-gray-700 mb-2">
-                                Phone Number *
-                            </label>
-                            <input
-                                type="tel"
-                                id="phoneNumber"
-                                name="phoneNumber"
-                                class="form-input w-full px-4 py-2 border rounded-lg"
-                                placeholder="e.g., 08012345678"
-                                required
-                            />
-                            <div class="error-message" id="phoneNumberError"></div>
-                        </div>
-                    </div>
-                </div>
+<form id="signupForm" class="bg-gray-50 rounded-2xl p-8">
 
-                <!-- SECTION 2: CONTACT DETAILS -->
-                <div class="form-section mb-8">
-                    <span class="section-number">2</span>
-                    <h2 class="text-xl font-bold primary-color mb-4">Contact Details</h2>
-                    <div class="grid grid-cols-1 gap-6">
-                        <div>
-                            <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">
-                                Email Address *
-                            </label>
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                class="form-input w-full px-4 py-2 border rounded-lg"
-                                placeholder="your.email@example.com"
-                                required
-                            />
-                            <div class="error-message" id="emailError"></div>
-                        </div>
+<!-- Personal -->
+<div class="form-section mb-6">
+<span class="section-number">1</span>
+<h2 class="text-xl font-bold primary-color mb-4">Personal Information</h2>
 
-                        <div>
-                            <label for="location" class="block text-sm font-semibold text-gray-700 mb-2">
-                                Location *
-                            </label>
-                            <select
-                                id="location"
-                                name="location"
-                                class="form-input w-full px-4 py-2 border rounded-lg"
-                                required
-                            >
-                                <option value="">Select your location</option>
-                                <option value="Lagos">Lagos</option>
-                                <option value="Port Harcourt">Port Harcourt</option>
-                                <option value="Abuja">Abuja</option>
-                                <option value="Ibadan">Ibadan</option>
-                                <option value="Kano">Kano</option>
-                                <option value="Other">Other</option>
-                            </select>
-                            <div class="error-message" id="locationError"></div>
-                        </div>
-                    </div>
-                </div>
+<input id="fullName" class="form-input w-full px-4 py-2 border rounded-lg mb-4" placeholder="Full Name" required>
+<input id="phoneNumber" class="form-input w-full px-4 py-2 border rounded-lg" placeholder="Phone Number" required>
 
-                <!-- SECTION 3: VERIFICATION DOCUMENTS -->
-                <div class="form-section mb-8">
-                    <span class="section-number">3</span>
-                    <h2 class="text-xl font-bold primary-color mb-4">Verification Documents</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="nin" class="block text-sm font-semibold text-gray-700 mb-2">
-                                NIN (11 digits) *
-                            </label>
-                            <input
-                                type="text"
-                                id="nin"
-                                name="nin"
-                                class="form-input w-full px-4 py-2 border rounded-lg"
-                                placeholder="e.g., 12345678901"
-                                maxlength="11"
-                                pattern="[0-9]{11}"
-                                required
-                            />
-                            <div class="error-message" id="ninError"></div>
-                        </div>
+</div>
 
-                        <div>
-                            <label for="imblnLicense" class="block text-sm font-semibold text-gray-700 mb-2">
-                                IMBLN License Number *
-                            </label>
-                            <input
-                                type="text"
-                                id="imblnLicense"
-                                name="imblnLicense"
-                                class="form-input w-full px-4 py-2 border rounded-lg"
-                                placeholder="Enter your license number"
-                                required
-                            />
-                            <div class="error-message" id="imblnLicenseError"></div>
-                        </div>
-                    </div>
-                </div>
+<!-- Contact -->
+<div class="form-section mb-6">
+<span class="section-number">2</span>
+<h2 class="text-xl font-bold primary-color mb-4">Contact</h2>
 
-                <!-- SECTION 4: LICENSE DOCUMENT UPLOAD -->
-                <div class="form-section mb-8">
-                    <span class="section-number">4</span>
-                    <h2 class="text-xl font-bold primary-color mb-4">License Document Upload</h2>
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-2">
-                            Upload License Document (PDF, JPG, PNG) *
-                        </label>
-                        <div class="upload-area" id="uploadArea">
-                            <svg class="w-8 h-8 mb-2 mx-auto primary-color" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
-                            </svg>
-                            <p class="text-sm text-gray-600">Click to upload or drag and drop</p>
-                            <p class="text-xs text-gray-500 mt-1">PDF, DOC, JPG up to 5MB</p>
-                            <input type="file" id="licenseFile" class="file-input" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" />
-                        </div>
-                    </div>
-                </div>
+<input id="email" type="email" class="form-input w-full px-4 py-2 border rounded-lg mb-4" placeholder="Email" required>
 
-                <!-- SECTION 5: ACCOUNT SECURITY -->
-                <div class="form-section mb-8">
-                    <span class="section-number">5</span>
-                    <h2 class="text-xl font-bold primary-color mb-4">Account Security</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="password" class="block text-sm font-semibold text-gray-700 mb-2">
-                                Password *
-                            </label>
-                            <div class="relative">
-                                <input
-                                    type="password"
-                                    id="password"
-                                    name="password"
-                                    class="form-input w-full px-4 py-2 border rounded-lg pr-10"
-                                    placeholder="At least 8 characters"
-                                    minlength="8"
-                                    required
-                                />
-                                <button
-                                    type="button"
-                                    class="password-toggle absolute right-3 top-2.5"
-                                    onclick="togglePassword('password')"
-                                >
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                    </svg>
-                                </button>
-                            </div>
-                            <div class="error-message" id="passwordError"></div>
-                        </div>
+<select id="location" class="form-input w-full px-4 py-2 border rounded-lg">
+<option value="">Select location</option>
+<option>Lagos</option>
+<option>Port Harcourt</option>
+<option>Abuja</option>
+<option>Ibadan</option>
+<option>Kano</option>
+</select>
 
-                        <div>
-                            <label for="confirmPassword" class="block text-sm font-semibold text-gray-700 mb-2">
-                                Confirm Password *
-                            </label>
-                            <div class="relative">
-                                <input
-                                    type="password"
-                                    id="confirmPassword"
-                                    name="confirmPassword"
-                                    class="form-input w-full px-4 py-2 border rounded-lg pr-10"
-                                    placeholder="Confirm your password"
-                                    required
-                                />
-                                <button
-                                    type="button"
-                                    class="password-toggle absolute right-3 top-2.5"
-                                    onclick="togglePassword('confirmPassword')"
-                                >
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                    </svg>
-                                </button>
-                            </div>
-                            <div class="error-message" id="confirmPasswordError"></div>
-                        </div>
-                    </div>
-                </div>
+</div>
 
-                <!-- SECTION 6: TERMS AGREEMENT -->
-                <div class="form-section mb-8">
-                    <span class="section-number">6</span>
-                    <h2 class="text-xl font-bold primary-color mb-4">Terms Agreement</h2>
-                    <div>
-                        <label class="flex items-start space-x-3 cursor-pointer">
-                            <input
-                                type="checkbox"
-                                id="agreeToTerms"
-                                name="agreeToTerms"
-                                class="checkbox-input mt-1"
-                                required
-                            />
-                            <span class="text-sm text-gray-600">
-                                I agree to the <a href="#" class="font-semibold primary-color hover:underline">Terms of Service</a> and <a href="#" class="font-semibold primary-color hover:underline">Privacy Policy</a>
-                            </span>
-                        </label>
-                        <div class="error-message" id="agreeToTermsError"></div>
-                    </div>
-                </div>
+<!-- Verification -->
+<div class="form-section mb-6">
+<span class="section-number">3</span>
+<h2 class="text-xl font-bold primary-color mb-4">Verification</h2>
 
-                <!-- SECTION 7: SUBMIT -->
-                <div class="form-section">
-                    <span class="section-number">7</span>
-                    <h2 class="text-xl font-bold primary-color mb-4">Submit Application</h2>
-                    <button
-                        type="submit"
-                        class="btn-primary w-full py-3 text-lg font-semibold rounded-lg"
-                    >
-                        Create Account
-                    </button>
-                </div>
-            </form>
-        </div>
-    </main>
+<input id="nin" class="form-input w-full px-4 py-2 border rounded-lg mb-4" placeholder="NIN (11 digits)" required>
+<input id="imblnLicense" class="form-input w-full px-4 py-2 border rounded-lg" placeholder="IMBLN License Number" required>
 
-    <!-- Footer -->
-    <footer class="border-t border-gray-200 py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
-        <div class="max-w-7xl mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-                <div class="col-span-1 md:col-span-2">
-                    <div class="flex items-center space-x-2 mb-4">
-                        <svg class="w-8 h-8 primary-color" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
-                        </svg>
-                        <span class="text-2xl font-bold primary-color">AgentTrust</span>
-                    </div>
-                    <p class="text-gray-600 max-w-md">
-                        Nigeria's premier platform for connecting with verified real estate agents. Safe, secure, and trustworthy.
-                    </p>
-                </div>
+</div>
 
-                <div>
-                    <h4 class="font-semibold mb-4 primary-color">Legal</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-600 hover:text-gray-900 transition-colors">Terms of Service</a></li>
-                        <li><a href="#" class="text-gray-600 hover:text-gray-900 transition-colors">Privacy Policy</a></li>
-                        <li><a href="#" class="text-gray-600 hover:text-gray-900 transition-colors">Cookie Policy</a></li>
-                    </ul>
-                </div>
+<!-- Upload -->
+<div class="form-section mb-6">
+<span class="section-number">4</span>
+<h2 class="text-xl font-bold primary-color mb-4">License Upload</h2>
 
-                <div>
-                    <h4 class="font-semibold mb-4 primary-color">Support</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-600 hover:text-gray-900 transition-colors">Contact Us</a></li>
-                        <li><a href="#" class="text-gray-600 hover:text-gray-900 transition-colors">Help Center</a></li>
-                        <li><a href="#" class="text-gray-600 hover:text-gray-900 transition-colors">FAQs</a></li>
-                    </ul>
-                </div>
-            </div>
+<div id="uploadArea" class="upload-area">
+Click to upload license
+<input type="file" id="licenseFile" class="file-input">
+</div>
 
-            <div class="pt-8 border-t border-gray-200 text-center text-gray-600">
-                <p>&copy; 2024 AgentTrust. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+</div>
 
-    <!-- Supabase Library -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
-    <script>
-        // ============================================
-        // SECTION 8: DATABASE CONNECTION
-        // ============================================
-        
-        // 8.1 Initialize Supabase
-        const supabaseUrl = 'https://welrbhtfsgxeeedycmym.supabase.co';
-        const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndlbHJiaHRmc2d4ZWVkeWNteW0iLCJyb2xlIjoiYW5vbiIsImlhdCI6MTc3MzI3NjQzOSwiZXhwIjoyMDg4ODUyNDM5fQ.bnOBFPPl51RVffRBPeDPNoEZAvVA4WfXZ8ugyRdhGkE';
-        const supabase = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
+<!-- Password -->
+<div class="form-section mb-6">
+<span class="section-number">5</span>
+<h2 class="text-xl font-bold primary-color mb-4">Security</h2>
 
-        // 8.2 Get DOM elements
-        const form = document.getElementById('signupForm');
-        const uploadArea = document.getElementById('uploadArea');
-        const fileInput = document.getElementById('licenseFile');
-        const successMessage = document.getElementById('successMessage');
+<input id="password" type="password" class="form-input w-full px-4 py-2 border rounded-lg mb-4" placeholder="Password">
 
-        // 8.3 File upload handlers
-        uploadArea.addEventListener('click', () => fileInput.click());
-        uploadArea.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            uploadArea.style.backgroundColor = '#f3f4f6';
-        });
-        uploadArea.addEventListener('dragleave', () => {
-            uploadArea.style.backgroundColor = 'transparent';
-        });
-        uploadArea.addEventListener('drop', (e) => {
-            e.preventDefault();
-            uploadArea.style.backgroundColor = 'transparent';
-            fileInput.files = e.dataTransfer.files;
-        });
+<input id="confirmPassword" type="password" class="form-input w-full px-4 py-2 border rounded-lg" placeholder="Confirm Password">
 
-        // 8.4 Password visibility toggle
-        window.togglePassword = function(fieldId) {
-            const field = document.getElementById(fieldId);
-            const type = field.type === 'password' ? 'text' : 'password';
-            field.type = type;
-        }
+</div>
 
-        // 8.5 Clear error messages on input
-        document.querySelectorAll('.form-input').forEach(input => {
-            input.addEventListener('input', () => {
-                const errorId = input.id + 'Error';
-                const errorElement = document.getElementById(errorId);
-                if (errorElement) {
-                    errorElement.classList.remove('show');
-                }
-            });
-        });
+<!-- Terms -->
+<div class="form-section mb-6">
+<span class="section-number">6</span>
 
-        // 8.6 Form validation
-        function validateForm() {
-            const errors = {};
+<label class="flex items-center gap-2">
+<input id="agreeToTerms" type="checkbox" class="checkbox-input">
+<span>I agree to Terms</span>
+</label>
 
-            // Validate full name
-            const fullName = document.getElementById('fullName').value.trim();
-            if (!fullName) {
-                errors.fullName = 'Full name is required';
-            }
+</div>
 
-            // Validate phone number
-            const phoneNumber = document.getElementById('phoneNumber').value.replace(/\s/g, '');
-            if (!phoneNumber) {
-                errors.phoneNumber = 'Phone number is required';
-            } else if (!/^0[0-9]{10}$/.test(phoneNumber)) {
-                errors.phoneNumber = 'Phone number must start with 0 and have 11 digits';
-            }
+<button class="btn-primary w-full py-3 rounded-lg text-lg font-semibold">
+Create Account
+</button>
 
-            // Validate email
-            const email = document.getElementById('email').value.trim();
-            if (!email) {
-                errors.email = 'Email is required';
-            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                errors.email = 'Please enter a valid email';
-            }
+</form>
+</div>
+</main>
 
-            // Validate location
-            const location = document.getElementById('location').value;
-            if (!location) {
-                errors.location = 'Location is required';
-            }
+<!-- Supabase Library -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-            // Validate NIN
-            const nin = document.getElementById('nin').value;
-            if (!nin) {
-                errors.nin = 'NIN is required';
-            } else if (!/^[0-9]{11}$/.test(nin)) {
-                errors.nin = 'NIN must be exactly 11 digits';
-            }
+<script>
 
-            // Validate IMBLN license
-            const imblnLicense = document.getElementById('imblnLicense').value.trim();
-            if (!imblnLicense) {
-                errors.imblnLicense = 'IMBLN License number is required';
-            }
+/* =====================================
+SUPABASE CONNECTION
+===================================== */
 
-            // Validate password
-            const password = document.getElementById('password').value;
-            if (!password) {
-                errors.password = 'Password is required';
-            } else if (password.length < 8) {
-                errors.password = 'Password must be at least 8 characters';
-            }
+const supabaseUrl = "https://welrbhtfsgxeeedycmym.supabase.co"
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+const supabase = window.supabase.createClient(supabaseUrl, supabaseKey)
 
-            // Validate confirm password
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            if (!confirmPassword) {
-                errors.confirmPassword = 'Please confirm your password';
-            } else if (password !== confirmPassword) {
-                errors.confirmPassword = 'Passwords do not match';
-            }
+/* =====================================
+ELEMENTS
+===================================== */
 
-            // Validate terms agreement
-            const agreeToTerms = document.getElementById('agreeToTerms').checked;
-            if (!agreeToTerms) {
-                errors.agreeToTerms = 'You must agree to the Terms and Privacy Policy';
-            }
+const form = document.getElementById("signupForm")
+const fileInput = document.getElementById("licenseFile")
+const uploadArea = document.getElementById("uploadArea")
+const successMessage = document.getElementById("successMessage")
 
-            return errors;
-        }
+uploadArea.addEventListener("click",()=>fileInput.click())
 
-        // 8.7 Display errors
-        function displayErrors(errors) {
-            document.querySelectorAll('.error-message').forEach(el => {
-                el.classList.remove('show');
-            });
+/* =====================================
+FORM SUBMIT
+===================================== */
 
-            for (const [fieldName, errorMessage] of Object.entries(errors)) {
-                const errorElement = document.getElementById(fieldName + 'Error');
-                if (errorElement) {
-                    errorElement.textContent = errorMessage;
-                    errorElement.classList.add('show');
-                }
-            }
-        }
+form.addEventListener("submit", async (e)=>{
 
-        // 8.8 Form submission handler
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
+e.preventDefault()
 
-            const errors = validateForm();
+const fullName=document.getElementById("fullName").value
+const phone=document.getElementById("phoneNumber").value
+const email=document.getElementById("email").value
+const location=document.getElementById("location").value
+const nin=document.getElementById("nin").value
+const license=document.getElementById("imblnLicense").value
+const password=document.getElementById("password").value
 
-            if (Object.keys(errors).length === 0) {
-                // Prepare form data for database
-                const formData = {
-                    full_name: document.getElementById('fullName').value.trim(),
-                    phone: document.getElementById('phoneNumber').value.replace(/\s/g, ''),
-                    email: document.getElementById('email').value.trim(),
-                    location: document.getElementById('location').value,
-                    nin: document.getElementById('nin').value,
-                    imbln_license: document.getElementById('imblnLicense').value.trim(),
-                    verified: false,
-                    verification_status: 'pending',
-                    created_at: new Date().toISOString()
-                };
+try{
 
-                try {
-                    // Insert data into Supabase
-                    const { data, error } = await supabase
-                        .from('agents')
-                        .insert([formData]);
+let fileUrl=null
 
-                    if (error) {
-                        console.error('Supabase error:', error);
-                        alert('Error saving data. Please try again.');
-                    } else {
-                        console.log('Data saved successfully:', data);
-                        
-                        // Show success message
-                        successMessage.classList.add('show');
-                        
-                        // Reset form after 3 seconds
-                        setTimeout(() => {
-                            form.reset();
-                            successMessage.classList.remove('show');
-                        }, 3000);
-                    }
-                } catch (err) {
-                    console.error('Error:', err);
-                    alert('Something went wrong. Please try again.');
-                }
-            } else {
-                displayErrors(errors);
-            }
-        });
-    </script>
+/* Upload file if provided */
+
+if(fileInput.files.length>0){
+
+const file=fileInput.files[0]
+const fileName=Date.now()+"_"+file.name
+
+const {data:fileData,error:fileError}=await supabase
+.storage
+.from("licenses")
+.upload(fileName,file)
+
+if(fileError) throw fileError
+
+fileUrl=fileData.path
+}
+
+/* Insert into database */
+
+const {data,error}=await supabase
+.from("agents")
+.insert([
+{
+full_name:fullName,
+phone:phone,
+email:email,
+location:location,
+nin:nin,
+imbln_license:license,
+license_file:fileUrl,
+verified:false,
+verification_status:"pending"
+}
+])
+
+if(error) throw error
+
+successMessage.classList.add("show")
+form.reset()
+
+}catch(err){
+
+alert("Error: "+err.message)
+
+}
+
+})
+
+</script>
+
 </body>
 </html>
