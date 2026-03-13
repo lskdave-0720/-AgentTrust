@@ -1,196 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Join as Agent - AgentTrust</title>
+<meta name="description" content="Create your agent account on AgentTrust and get verified with us.">
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+body {font-family:'Inter',sans-serif;}
+.primary-color{color:#0B4F37;}
+.primary-bg{background:#0B4F37;}
+.accent-bg{background:#F5B041;}
+
+.btn-primary{
+background:#0B4F37;
+color:white;
+transition:all .3s ease;
+}
+
+.btn-primary:hover{
+box-shadow:0 10px 25px rgba(11,79,55,.3);
+transform:translateY(-2px);
+}
+
+.btn-primary:disabled{
+opacity:.6;
+cursor:not-allowed;
+transform:none;
+}
+
+.form-input{
+border-color:#e5e7eb;
+transition:all .3s ease;
+}
+
+.form-input:focus{
+border-color:#0B4F37;
+outline:none;
+box-shadow:0 0 0 3px rgba(11,79,55,.1);
+}
+
+.error-message{
+color:#ef4444;
+font-size:.875rem;
+margin-top:.25rem;
+display:none;
+}
+
+.error-message.show{display:block;}
+
+.success-message{
+background:#0B4F37;
+color:white;
+padding:1rem;
+border-radius:.5rem;
+margin-bottom:1.5rem;
+display:none;
+}
+
+.success-message.show{display:block;}
+
+.alert-error{
+background:#ef4444;
+color:white;
+padding:1rem;
+border-radius:.5rem;
+margin-bottom:1.5rem;
+display:none;
+}
+
+.alert-error.show{display:block;}
+
+.checkbox-input{accent-color:#0B4F37;}
+</style>
+</head>
+
+<body class="bg-white">
+
+<header class="border-b border-gray-100">
+<div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+
+<div class="flex items-center space-x-2">
+<svg class="w-8 h-8 primary-color" fill="currentColor" viewBox="0 0 24 24">
+<path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+</svg>
+<span class="text-2xl font-bold primary-color">AgentTrust</span>
+</div>
+
+</div>
+</header>
+
+<main class="py-12 px-4">
+<div class="max-w-2xl mx-auto">
+
+<h1 class="text-4xl font-bold mb-2 primary-color">Join as Agent</h1>
+<p class="text-gray-600 mb-8">Complete all sections to create your account</p>
+
+<div id="successMessage" class="success-message">
+✓ Account created successfully! We'll review your application.
+</div>
+
+<div id="errorMessage" class="alert-error">
+<span id="errorText">Something went wrong.</span>
+</div>
+
+<form id="signupForm" class="bg-gray-50 rounded-2xl p-8">
+
+<div class="mb-6">
+<label class="font-semibold">Full Name *</label>
+<input id="fullName" class="form-input w-full border px-4 py-2 rounded-lg">
+<div id="fullNameError" class="error-message"></div>
+</div>
+
+<div class="mb-6">
+<label class="font-semibold">Phone Number *</label>
+<input id="phoneNumber" class="form-input w-full border px-4 py-2 rounded-lg" placeholder="08012345678">
+<div id="phoneNumberError" class="error-message"></div>
+</div>
+
+<div class="mb-6">
+<label class="font-semibold">Email *</label>
+<input id="email" type="email" class="form-input w-full border px-4 py-2 rounded-lg">
+<div id="emailError" class="error-message"></div>
+</div>
+
+<div class="mb-6">
+<label class="font-semibold">Location *</label>
+<select id="location" class="form-input w-full border px-4 py-2 rounded-lg">
+<option value="">Select location</option>
+<option>Lagos</option>
+<option>Port Harcourt</option>
+<option>Abuja</option>
+</select>
+<div id="locationError" class="error-message"></div>
+</div>
+
+<div class="mb-6">
+<label class="font-semibold">NIN (11 digits) *</label>
+<input id="nin" maxlength="11" class="form-input w-full border px-4 py-2 rounded-lg">
+<div id="ninError" class="error-message"></div>
+</div>
+
+<div class="mb-6">
+<label class="font-semibold">IMBLN License *</label>
+<input id="imblnLicense" class="form-input w-full border px-4 py-2 rounded-lg">
+<div id="imblnLicenseError" class="error-message"></div>
+</div>
+
+<div class="mb-6">
+<label class="font-semibold">Password *</label>
+<input type="password" id="password" class="form-input w-full border px-4 py-2 rounded-lg">
+<div id="passwordError" class="error-message"></div>
+</div>
+
+<div class="mb-6">
+<label class="font-semibold">Confirm Password *</label>
+<input type="password" id="confirmPassword" class="form-input w-full border px-4 py-2 rounded-lg">
+<div id="confirmPasswordError" class="error-message"></div>
+</div>
+
+<div class="mb-6">
+<label class="flex items-center space-x-2">
+<input type="checkbox" id="agreeToTerms" class="checkbox-input">
+<span>I agree to Terms</span>
+</label>
+<div id="agreeToTermsError" class="error-message"></div>
+</div>
+
+<button id="submitBtn" class="btn-primary w-full py-3 rounded-lg font-semibold">
+Create Account
+</button>
+
+</form>
+
+</div>
+</main>
+
 <script>
-const supabaseUrl = "https://welrbhtfsgxeeedycmym.supabase.co";
-const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI...";
-const supabase = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
 
-const form = document.getElementById("signupForm");
-const successMessage = document.getElementById("successMessage");
-const errorMessage = document.getElementById("errorMessage");
-const errorText = document.getElementById("errorText");
-const submitBtn = document.getElementById("submitBtn");
+const supabaseUrl="https://welrbhtfsgxeeedycmym.supabase.co"
+const supabaseKey="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndlbHJiaHRmc2d4ZWVlZHljbXltIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMyNzY0MzksImV4cCI6MjA4ODg1MjQzOX0.bnOBFPPl51RVffRBPeDPNoEZAvVA4WfXZ8ugyRdhGkE"
 
-const fileInput = document.getElementById("licenseFile");
-const uploadArea = document.getElementById("uploadArea");
+const supabase = window.supabase.createClient(supabaseUrl,supabaseKey)
 
-uploadArea.addEventListener("click", () => fileInput.click());
+const form=document.getElementById("signupForm")
+const successMessage=document.getElementById("successMessage")
+const errorMessage=document.getElementById("errorMessage")
+const errorText=document.getElementById("errorText")
+const submitBtn=document.getElementById("submitBtn")
 
-fileInput.addEventListener("change", () => {
-  if (fileInput.files.length > 0) {
-    document.getElementById("fileName").textContent = fileInput.files[0].name;
-  }
-});
+function validateForm(){
 
-function togglePassword(id) {
-  const field = document.getElementById(id);
-  field.type = field.type === "password" ? "text" : "password";
+let errors={}
+
+let phone=document.getElementById("phoneNumber").value.trim()
+let nin=document.getElementById("nin").value.trim()
+let password=document.getElementById("password").value
+let confirm=document.getElementById("confirmPassword").value
+
+if(!/^0\d{10}$/.test(phone))
+errors.phoneNumber="Phone must start with 0 and be 11 digits"
+
+if(!/^\d{11}$/.test(nin))
+errors.nin="NIN must be exactly 11 digits"
+
+if(password.length<8)
+errors.password="Password must be at least 8 characters"
+
+if(password!==confirm)
+errors.confirmPassword="Passwords do not match"
+
+if(!document.getElementById("agreeToTerms").checked)
+errors.agreeToTerms="You must accept terms"
+
+return errors
 }
 
-function showError(id, message) {
-  const el = document.getElementById(id + "Error");
-  if (el) {
-    el.textContent = message;
-    el.classList.add("show");
-  }
+function displayErrors(errors){
+
+document.querySelectorAll(".error-message").forEach(e=>e.classList.remove("show"))
+
+for(let field in errors){
+let el=document.getElementById(field+"Error")
+if(el){
+el.textContent=errors[field]
+el.classList.add("show")
+}
+}
 }
 
-function clearErrors() {
-  document.querySelectorAll(".error-message").forEach(e => {
-    e.classList.remove("show");
-  });
+form.addEventListener("submit",async function(e){
+
+e.preventDefault()
+
+successMessage.classList.remove("show")
+errorMessage.classList.remove("show")
+
+const errors=validateForm()
+
+if(Object.keys(errors).length>0){
+displayErrors(errors)
+return
 }
 
-function validateForm() {
+submitBtn.disabled=true
+submitBtn.textContent="Creating Account..."
 
-  clearErrors();
-  let valid = true;
+try{
 
-  const fullName = document.getElementById("fullName").value.trim();
-  const phone = document.getElementById("phoneNumber").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const location = document.getElementById("location").value;
-  const nin = document.getElementById("nin").value.trim();
-  const license = document.getElementById("imblnLicense").value.trim();
-  const password = document.getElementById("password").value;
-  const confirmPassword = document.getElementById("confirmPassword").value;
-  const agree = document.getElementById("agreeToTerms").checked;
+const fullName=document.getElementById("fullName").value
+const phone=document.getElementById("phoneNumber").value
+const email=document.getElementById("email").value
+const location=document.getElementById("location").value
+const nin=document.getElementById("nin").value
+const license=document.getElementById("imblnLicense").value
 
-  if (!fullName) {
-    showError("fullName", "Full name is required");
-    valid = false;
-  }
+const {error}=await supabase
+.from("agents")
+.insert([
+{
+"full name":fullName,
+phone:phone,
+email:email,
+location:location,
+"NIN":nin,
+"IMBLN license":license,
+verified:false,
+"verification status":"pending",
+"created at":new Date()
+}
+])
 
-  if (!/^0\d{10}$/.test(phone)) {
-    showError("phoneNumber", "Phone must start with 0 and be 11 digits");
-    valid = false;
-  }
+if(error) throw error
 
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    showError("email", "Invalid email address");
-    valid = false;
-  }
+successMessage.classList.add("show")
+form.reset()
 
-  if (!location) {
-    showError("location", "Select a location");
-    valid = false;
-  }
+}catch(err){
 
-  if (!/^\d{11}$/.test(nin)) {
-    showError("nin", "NIN must be exactly 11 digits");
-    valid = false;
-  }
+errorText.textContent=err.message
+errorMessage.classList.add("show")
 
-  if (!license) {
-    showError("imblnLicense", "License number required");
-    valid = false;
-  }
-
-  if (password.length < 8) {
-    showError("password", "Password must be at least 8 characters");
-    valid = false;
-  }
-
-  if (password !== confirmPassword) {
-    showError("confirmPassword", "Passwords do not match");
-    valid = false;
-  }
-
-  if (!agree) {
-    showError("agreeToTerms", "You must accept terms");
-    valid = false;
-  }
-
-  return valid;
 }
 
-form.addEventListener("submit", async function(e) {
+submitBtn.disabled=false
+submitBtn.textContent="Create Account"
 
-  e.preventDefault();   // PREVENT PAGE REFRESH
+})
 
-  errorMessage.classList.remove("show");
-  successMessage.classList.remove("show");
-
-  if (!validateForm()) return;
-
-  submitBtn.disabled = true;
-  submitBtn.textContent = "Creating Account...";
-
-  const file = fileInput.files[0];
-  let fileUrl = null;
-
-  try {
-
-    /* Upload document if exists */
-
-    if (file) {
-
-      const filePath = "licenses/" + Date.now() + "_" + file.name;
-
-      const { error: uploadError } = await supabase.storage
-        .from("agent-documents")
-        .upload(filePath, file);
-
-      if (uploadError) throw uploadError;
-
-      const { data } = supabase.storage
-        .from("agent-documents")
-        .getPublicUrl(filePath);
-
-      fileUrl = data.publicUrl;
-    }
-
-    /* Create user in Supabase Auth */
-
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value;
-
-    const { data: authData, error: authError } = await supabase.auth.signUp({
-      email,
-      password
-    });
-
-    if (authError) throw authError;
-
-    /* Save agent data */
-
-    const { error } = await supabase
-      .from("agents")
-      .insert({
-        user_id: authData.user.id,
-        full_name: document.getElementById("fullName").value.trim(),
-        phone: document.getElementById("phoneNumber").value.trim(),
-        email: email,
-        location: document.getElementById("location").value,
-        nin: document.getElementById("nin").value,
-        imbln_license: document.getElementById("imblnLicense").value.trim(),
-        license_document: fileUrl,
-        verified: false,
-        verification_status: "pending"
-      });
-
-    if (error) throw error;
-
-    /* SUCCESS */
-
-    successMessage.classList.add("show");
-
-    form.reset();
-
-    document.getElementById("fileName").textContent =
-      "PDF, DOC, JPG up to 5MB";
-
-  } catch (err) {
-
-    errorText.textContent = err.message;
-    errorMessage.classList.add("show");
-
-  } finally {
-
-    submitBtn.disabled = false;
-    submitBtn.textContent = "Create Account";
-
-  }
-
-});
 </script>
+
+</body>
+</html>
