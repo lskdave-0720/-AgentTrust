@@ -4,119 +4,57 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Join as Agent - AgentTrust</title>
-<meta name="description" content="Create your agent account on AgentTrust and get verified with us.">
-
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-body {font-family:'Inter',sans-serif;}
+body { font-family: 'Inter', sans-serif; }
 .primary-color{color:#0B4F37;}
-.primary-bg{background:#0B4F37;}
-.accent-bg{background:#F5B041;}
-.btn-primary{
-background:#0B4F37;
-color:white;
-transition:all .3s ease;
-}
-.btn-primary:hover{
-box-shadow:0 10px 25px rgba(11,79,55,.3);
-transform:translateY(-2px);
-}
-.btn-primary:disabled{
-opacity:.6;
-cursor:not-allowed;
-transform:none;
-}
-.form-input{
-border-color:#e5e7eb;
-transition:all .3s ease;
-}
-.form-input:focus{
-border-color:#0B4F37;
-outline:none;
-box-shadow:0 0 0 3px rgba(11,79,55,.1);
-}
-.error-message{
-color:#ef4444;
-font-size:.875rem;
-margin-top:.25rem;
-display:none;
-}
+.btn-primary{background:#0B4F37;color:white;transition:all .3s ease;}
+.btn-primary:hover{box-shadow:0 10px 25px rgba(11,79,55,.3);transform:translateY(-2px);}
+.btn-primary:disabled{opacity:.6;cursor:not-allowed;transform:none;}
+.form-input{border:1px solid #e5e7eb;transition:all .3s ease;padding:.5rem;border-radius:.5rem;width:100%;}
+.form-input:focus{border-color:#0B4F37;outline:none;box-shadow:0 0 0 3px rgba(11,79,55,.1);}
+.error-message{color:#ef4444;font-size:.875rem;margin-top:.25rem;display:none;}
 .error-message.show{display:block;}
-.success-message{
-background:#0B4F37;
-color:white;
-padding:1rem;
-border-radius:.5rem;
-margin-bottom:1.5rem;
-display:none;
-}
+.success-message{background:#0B4F37;color:white;padding:1rem;border-radius:.5rem;margin-bottom:1.5rem;display:none;}
 .success-message.show{display:block;}
-.alert-error{
-background:#ef4444;
-color:white;
-padding:1rem;
-border-radius:.5rem;
-margin-bottom:1.5rem;
-display:none;
-}
+.alert-error{background:#ef4444;color:white;padding:1rem;border-radius:.5rem;margin-bottom:1.5rem;display:none;}
 .alert-error.show{display:block;}
 .checkbox-input{accent-color:#0B4F37;}
 </style>
 </head>
-
 <body class="bg-white">
 
-<header class="border-b border-gray-100">
-<div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-<div class="flex items-center space-x-2">
-<svg class="w-8 h-8 primary-color" fill="currentColor" viewBox="0 0 24 24">
-<path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
-</svg>
-<span class="text-2xl font-bold primary-color">AgentTrust</span>
-</div>
-</div>
-</header>
-
-<main class="py-12 px-4">
-<div class="max-w-2xl mx-auto">
+<div class="max-w-2xl mx-auto py-12 px-4">
 
 <h1 class="text-4xl font-bold mb-2 primary-color">Join as Agent</h1>
-<p class="text-gray-600 mb-8">Complete all sections to create your account</p>
 
-<div id="successMessage" class="success-message">
-✓ Account created successfully! We'll review your application.
-</div>
-
-<div id="errorMessage" class="alert-error">
-<span id="errorText">Something went wrong.</span>
-</div>
+<div id="successMessage" class="success-message"></div>
+<div id="errorMessage" class="alert-error"><span id="errorText"></span></div>
 
 <form id="signupForm" class="bg-gray-50 rounded-2xl p-8">
 
 <div class="mb-6">
 <label class="font-semibold">Full Name *</label>
-<input id="fullName" class="form-input w-full border px-4 py-2 rounded-lg">
+<input id="fullName" class="form-input">
 <div id="fullNameError" class="error-message"></div>
 </div>
 
 <div class="mb-6">
 <label class="font-semibold">Phone Number *</label>
-<input id="phoneNumber" class="form-input w-full border px-4 py-2 rounded-lg" placeholder="08012345678">
+<input id="phoneNumber" class="form-input" placeholder="08012345678">
 <div id="phoneNumberError" class="error-message"></div>
 </div>
 
 <div class="mb-6">
 <label class="font-semibold">Email *</label>
-<input id="email" type="email" class="form-input w-full border px-4 py-2 rounded-lg">
+<input id="email" type="email" class="form-input">
 <div id="emailError" class="error-message"></div>
 </div>
 
 <div class="mb-6">
 <label class="font-semibold">Location *</label>
-<select id="location" class="form-input w-full border px-4 py-2 rounded-lg">
+<select id="location" class="form-input">
 <option value="">Select location</option>
 <option>Lagos</option>
 <option>Port Harcourt</option>
@@ -127,25 +65,25 @@ display:none;
 
 <div class="mb-6">
 <label class="font-semibold">NIN (11 digits) *</label>
-<input id="nin" maxlength="11" class="form-input w-full border px-4 py-2 rounded-lg">
+<input id="nin" maxlength="11" class="form-input">
 <div id="ninError" class="error-message"></div>
 </div>
 
 <div class="mb-6">
 <label class="font-semibold">IMBLN License *</label>
-<input id="imblnLicense" class="form-input w-full border px-4 py-2 rounded-lg">
+<input id="imblnLicense" class="form-input">
 <div id="imblnLicenseError" class="error-message"></div>
 </div>
 
 <div class="mb-6">
 <label class="font-semibold">Password *</label>
-<input type="password" id="password" class="form-input w-full border px-4 py-2 rounded-lg">
+<input type="password" id="password" class="form-input">
 <div id="passwordError" class="error-message"></div>
 </div>
 
 <div class="mb-6">
 <label class="font-semibold">Confirm Password *</label>
-<input type="password" id="confirmPassword" class="form-input w-full border px-4 py-2 rounded-lg">
+<input type="password" id="confirmPassword" class="form-input">
 <div id="confirmPasswordError" class="error-message"></div>
 </div>
 
@@ -162,51 +100,53 @@ Create Account
 </button>
 
 </form>
-
 </div>
-</main>
 
 <script>
+// Supabase config
 const supabaseUrl = "https://welrbhtfsgxeeedycmym.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndlbHJiaHRmc2d4ZWVlZHljbXltIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMyNzY0MzksImV4cCI6MjA4ODg1MjQzOX0.bnOBFPPl51RVffRBPeDPNoEZAvVA4WfXZ8ugyRdhGkE";
-const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
+// Elements
 const form = document.getElementById("signupForm");
+const submitBtn = document.getElementById("submitBtn");
 const successMessage = document.getElementById("successMessage");
 const errorMessage = document.getElementById("errorMessage");
 const errorText = document.getElementById("errorText");
-const submitBtn = document.getElementById("submitBtn");
 
-function validateForm(){
-  let errors={};
-  let phone = document.getElementById("phoneNumber").value.trim();
-  let nin = document.getElementById("nin").value.trim();
-  let password = document.getElementById("password").value;
-  let confirm = document.getElementById("confirmPassword").value;
+// Validation
+function validateForm() {
+  let errors = {};
+  const phone = document.getElementById("phoneNumber").value.trim();
+  const nin = document.getElementById("nin").value.trim();
+  const password = document.getElementById("password").value;
+  const confirm = document.getElementById("confirmPassword").value;
 
-  if(!/^0\d{10}$/.test(phone)) errors.phoneNumber = "Phone must start with 0 and be 11 digits";
-  if(!/^\d{11}$/.test(nin)) errors.nin = "NIN must be exactly 11 digits";
-  if(password.length < 8) errors.password = "Password must be at least 8 characters";
-  if(password !== confirm) errors.confirmPassword = "Passwords do not match";
-  if(!document.getElementById("agreeToTerms").checked) errors.agreeToTerms = "You must accept terms";
+  if(!/^0\d{10}$/.test(phone)) errors.phoneNumber="Phone must start with 0 and be 11 digits";
+  if(!/^\d{11}$/.test(nin)) errors.nin="NIN must be exactly 11 digits";
+  if(password.length<8) errors.password="Password must be at least 8 characters";
+  if(password!==confirm) errors.confirmPassword="Passwords do not match";
+  if(!document.getElementById("agreeToTerms").checked) errors.agreeToTerms="You must accept terms";
 
   return errors;
 }
 
-function displayErrors(errors){
+function displayErrors(errors) {
   document.querySelectorAll(".error-message").forEach(e => e.classList.remove("show"));
-  for(let field in errors){
-    let el = document.getElementById(field + "Error");
+  for(let field in errors) {
+    const el = document.getElementById(field + "Error");
     if(el){ el.textContent = errors[field]; el.classList.add("show"); }
   }
 }
 
-submitBtn.addEventListener("click", async function(){
+// Submit
+submitBtn.addEventListener("click", async function() {
   successMessage.classList.remove("show");
   errorMessage.classList.remove("show");
 
   const errors = validateForm();
-  if(Object.keys(errors).length > 0){ displayErrors(errors); return; }
+  if(Object.keys(errors).length>0){ displayErrors(errors); return; }
 
   submitBtn.disabled = true;
   submitBtn.textContent = "Creating Account...";
@@ -219,18 +159,20 @@ submitBtn.addEventListener("click", async function(){
   const license = document.getElementById("imblnLicense").value;
 
   try{
-    // Check duplicates first
-    const { data: existing } = await supabase
+    console.log("Submitting data to Supabase:", {fullName, phone, email, location, nin, license});
+
+    // Check duplicates
+    const { data: existing, error: dupError } = await supabase
       .from("agents")
       .select("id")
       .or(`NIN.eq.${nin},phone.eq.${phone}`)
       .limit(1);
 
-    if(existing.length > 0){
-      throw new Error("An account with this NIN or phone already exists.");
-    }
+    if(dupError) throw dupError;
+    if(existing.length > 0) throw new Error("An account with this NIN or phone already exists.");
 
-    const { error } = await supabase
+    // Insert
+    const { data, error } = await supabase
       .from("agents")
       .insert([{
         "full name": fullName,
@@ -246,11 +188,14 @@ submitBtn.addEventListener("click", async function(){
 
     if(error) throw error;
 
+    console.log("Insert success:", data);
+    successMessage.textContent = "✓ Account created successfully! We'll review your application.";
     successMessage.classList.add("show");
     form.reset();
 
-  }catch(err){
-    errorText.textContent = err.message;
+  } catch(err) {
+    console.error("Error:", err);
+    errorText.textContent = err.message || "Something went wrong";
     errorMessage.classList.add("show");
   }
 
