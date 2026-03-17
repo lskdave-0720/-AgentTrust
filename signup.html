@@ -103,104 +103,114 @@ Create Account
 </div>
 
 <script>
-// Supabase config
 const supabaseUrl = "https://welrbhtfsgxeeedycmym.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndlbHJiaHRmc2d4ZWVlZHljbXltIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMyNzY0MzksImV4cCI6MjA4ODg1MjQzOX0.bnOBFPPl51RVffRBPeDPNoEZAvVA4WfXZ8ugyRdhGkE";
-const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-// Elements
 const form = document.getElementById("signupForm");
 const submitBtn = document.getElementById("submitBtn");
 const successMessage = document.getElementById("successMessage");
 const errorMessage = document.getElementById("errorMessage");
 const errorText = document.getElementById("errorText");
 
-// Validation
 function validateForm() {
   let errors = {};
+  const fullName = document.getElementById("fullName").value.trim();
   const phone = document.getElementById("phoneNumber").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const location = document.getElementById("location").value.trim();
   const nin = document.getElementById("nin").value.trim();
+  const license = document.getElementById("imblnLicense").value.trim();
   const password = document.getElementById("password").value;
   const confirm = document.getElementById("confirmPassword").value;
 
-  if(!/^0\d{10}$/.test(phone)) errors.phoneNumber="Phone must start with 0 and be 11 digits";
-  if(!/^\d{11}$/.test(nin)) errors.nin="NIN must be exactly 11 digits";
-  if(password.length<8) errors.password="Password must be at least 8 characters";
-  if(password!==confirm) errors.confirmPassword="Passwords do not match";
-  if(!document.getElementById("agreeToTerms").checked) errors.agreeToTerms="You must accept terms";
+  if (!fullName) errors.fullName = "Full name is required";
+  if (!email) errors.email = "Email is required";
+  if (!location) errors.location = "Location is required";
+  if (!license) errors.imblnLicense = "IMBLN License is required";
+  if (!/^0\d{10}$/.test(phone)) errors.phoneNumber = "Phone must start with 0 and be 11 digits";
+  if (!/^\d{11}$/.test(nin)) errors.nin = "NIN must be exactly 11 digits";
+  if (password.length < 8) errors.password = "Password must be at least 8 characters";
+  if (password !== confirm) errors.confirmPassword = "Passwords do not match";
+  if (!document.getElementById("agreeToTerms").checked) errors.agreeToTerms = "You must accept terms";
 
   return errors;
 }
 
 function displayErrors(errors) {
   document.querySelectorAll(".error-message").forEach(e => e.classList.remove("show"));
-  for(let field in errors) {
+  for (let field in errors) {
     const el = document.getElementById(field + "Error");
-    if(el){ el.textContent = errors[field]; el.classList.add("show"); }
+    if (el) {
+      el.textContent = errors[field];
+      el.classList.add("show");
+    }
   }
 }
 
-// Submit
-submitBtn.addEventListener("click", async function() {
+submitBtn.addEventListener("click", async function(e) {
+  e.preventDefault();
   successMessage.classList.remove("show");
   errorMessage.classList.remove("show");
 
   const errors = validateForm();
-  if(Object.keys(errors).length>0){ displayErrors(errors); return; }
+  if (Object.keys(errors).length > 0) {
+    displayErrors(errors);
+    return;
+  }
 
   submitBtn.disabled = true;
   submitBtn.textContent = "Creating Account...";
 
-  const fullName = document.getElementById("fullName").value;
-  const phone = document.getElementById("phoneNumber").value;
-  const email = document.getElementById("email").value;
-  const location = document.getElementById("location").value;
-  const nin = document.getElementById("nin").value;
-  const license = document.getElementById("imblnLicense").value;
+  const fullName = document.getElementById("fullName").value.trim();
+  const phone = document.getElementById("phoneNumber").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const location = document.getElementById("location").value.trim();
+  const nin = document.getElementById("nin").value.trim();
+  const license = document.getElementById("imblnLicense").value.trim();
 
-  try{
-    console.log("Submitting data to Supabase:", {fullName, phone, email, location, nin, license});
+  try {
+    console.log("Submitting data:", { fullName, phone, email, location, nin, license });
 
-    // Check duplicates
-    const { data: existing, error: dupError } = await supabase
-      .from("agents")
-      .select("id")
-      .or(`NIN.eq.${nin},phone.eq.${phone}`)
-      .limit(1);
-
-    if(dupError) throw dupError;
-    if(existing.length > 0) throw new Error("An account with this NIN or phone already exists.");
-
-    // Insert
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
       .from("agents")
       .insert([{
-        "full name": fullName,
+        full_name: fullName,
         phone: phone,
         email: email,
         location: location,
-        "NIN": nin,
-        "IMBLN license": license,
+        nin: nin,
+        imbln_license: license,
         verified: false,
-        "verification status": "pending",
-        "created at": new Date()
-      }]);
+        verification_status: "pending"
+      }])
+      .select();
 
-    if(error) throw error;
+    if (error) {
+      console.error("Supabase error:", error);
+      if (error.code === "23505") {
+        throw new Error("This email is already registered");
+      }
+      throw error;
+    }
 
-    console.log("Insert success:", data);
+    console.log("Success:", data);
     successMessage.textContent = "✓ Account created successfully! We'll review your application.";
     successMessage.classList.add("show");
     form.reset();
 
-  } catch(err) {
-    console.error("Error:", err);
-    errorText.textContent = err.message || "Something went wrong";
-    errorMessage.classList.add("show");
-  }
+    setTimeout(() => {
+      successMessage.classList.remove("show");
+    }, 5000);
 
-  submitBtn.disabled = false;
-  submitBtn.textContent = "Create Account";
+  } catch (err) {
+    console.error("Error:", err);
+    errorText.textContent = err.message || "Something went wrong. Please try again.";
+    errorMessage.classList.add("show");
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Create Account";
+  }
 });
 </script>
 
